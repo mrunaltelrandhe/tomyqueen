@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Valentine ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{background:black;color:white;overflow:hidden;}
+
+/* 🎬 CINEMATIC INTRO */
+#intro{
+position:fixed;top:0;left:0;width:100%;height:100vh;
+background:black;display:flex;flex-direction:column;
+align-items:center;justify-content:center;z-index:10;
+animation:introFade 6s forwards;
+}
+#intro h1{font-size:3rem;letter-spacing:3px;opacity:0;animation:textReveal 3s forwards 1s;}
+#intro p{margin-top:15px;font-size:1.2rem;opacity:0;animation:textReveal 3s forwards 2.5s;}
+@keyframes textReveal{to{opacity:1;}}
+@keyframes introFade{0%,80%{opacity:1;}100%{opacity:0;visibility:hidden;}}
+
+/* 🎵 MUSIC START SCREEN */
+#musicScreen{
+position:fixed;top:0;left:0;width:100%;height:100vh;
+background:rgba(0,0,0,0.95);
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+z-index:9;
+}
+#musicScreen button{
+padding:15px 40px;
+font-size:22px;
+border:none;border-radius:40px;
+background:#ff3366;color:white;
+cursor:pointer;
+box-shadow:0 0 30px pink;
+}
+
+/* Background photo */
+.bg{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:url('wall.jpg') center/cover no-repeat;
+opacity:0.25;z-index:-2;
+}
+
+/* Rose petals */
+.petal{position:fixed;top:-50px;font-size:24px;animation:fall linear infinite;}
+@keyframes fall{to{transform:translateX(200px) rotate(360deg);top:110vh;}}
+
+/* Pages */
+.page{
+width:100%;height:100vh;display:none;
+align-items:center;justify-content:center;
+flex-direction:column;
+animation:cinematic 1.5s;
+}
+.active{display:flex;}
+@keyframes cinematic{from{opacity:0;transform:scale(1.15);}to{opacity:1;transform:scale(1);}}
+
+/* Buttons */
+button{
+padding:12px 30px;font-size:18px;
+border:none;border-radius:30px;
+cursor:pointer;margin:10px;
+}
+#yes{background:#ff3366;color:white;}
+#no{background:#444;color:white;}
+
+/* 🎥 Wedding Video */
+video{
+width:70%;max-width:600px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(255,105,180,0.8);
+animation:videoReveal 2s;
+}
+@keyframes videoReveal{from{opacity:0;transform:scale(1.2);}to{opacity:1;transform:scale(1);}}
+
+/* 📸 MEMORY GRID */
+.gallery{
+width:85%;
+max-height:65vh;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+overflow-y:auto;
+padding:10px;
+}
+.gallery img{
+width:100%;
+border-radius:15px;
+box-shadow:0 0 15px pink;
+transition:0.3s;
+}
+.gallery img:hover{transform:scale(1.05);}
+
+/* 💌 Letter */
+.letter{
+width:70%;
+background:rgba(255,255,255,0.1);
+padding:30px;border-radius:20px;
+font-size:20px;line-height:1.7;
+border:1px solid pink;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 INTRO -->
+<div id="intro">
+<h1>Hey Pillu Apli Choti Love Story ❤️</h1>
+<p>Not just a moment… Its A lifetime Memory 🎥</p>
+</div>
+
+<!-- 🎵 MUSIC SCREEN -->
+<div id="musicScreen">
+<h1>Tap to Begin Our Story 💖</h1>
+<br>
+<button onclick="startMusic()">▶ Play Music</button>
+</div>
+
+<div class="bg"></div>
+
+<audio id="bgMusic" loop>
+<source src="Piya.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page" id="p1">
+<h1 id="q1">Dipali Aplya Manaver hath theun sang 💖</h1>
+<div>
+<button id="yes">Ho Mala Banaychi ahe tuzhi baiko ❤️</button>
+<button id="no">Nahi me already baiko ahe konachi 😜</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+<h1>Our Forever Begins 💍</h1>
+<video autoplay loop muted playsinline>
+<source src="wedding.mp4">
+</video>
+<br>
+<button onclick="openPage(3)">Next ➡️</button>
+</div>
+
+<!-- PAGE 3 – 📸 MEMORIES -->
+<div class="page" id="p3">
+<h1>Our Beautiful Memories 📸</h1>
+<div class="gallery">
+<img src="pic1.jpg"><img src="pic2.jpg"><img src="pic3.jpg">
+<img src="pic4.jpg"><img src="pic5.jpg"><img src="pic6.jpg">
+<img src="pic7.jpg"><img src="pic8.jpg"><img src="pic9.jpg">
+<img src="pic10.jpg"><img src="pic11.jpg"><img src="pic12.jpg">
+</div>
+<br>
+<button onclick="openPage(4)">Next ➡️</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+<h1>My Love Letter 💌</h1>
+<div class="letter">
+तू माझ्या आयुष्यात आलीस  
+आणि माझं सगळं जग बदललं ❤️  
+<br><br>
+आज, उद्या आणि कायम  
+तूच माझं प्रेम… 💍
+</div>
+</div>
+
+<script>
+/* 🌹 Rose petals */
+setInterval(()=>{
+let p=document.createElement("div");
+p.className="petal";
+p.innerHTML="🌹";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),8000);
+},300);
+
+/* Start music */
+function startMusic(){
+document.getElementById("bgMusic").play();
+document.getElementById("musicScreen").style.display="none";
+openPage(1);
+}
+
+/* Question change */
+setTimeout(()=>{
+document.getElementById("q1").innerText="माझ्याशी लग्न करून माझी बायको बनशील का? 💍❤️";
+},6000);
+
+/* NO trick */
+let yes=document.getElementById("yes");
+document.getElementById("no").onclick=()=>{
+let size=parseInt(window.getComputedStyle(yes).fontSize);
+yes.style.fontSize=(size+6)+"px";
+};
+
+/* YES */
+yes.onclick=()=>openPage(2);
+
+function openPage(n){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById("p"+n).classList.add('active');
+}
+</script>
+
+</body>
+</html>
